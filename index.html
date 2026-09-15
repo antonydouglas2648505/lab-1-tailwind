@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>DevSpace - Full Stack Learning</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+
+    <script>
+      tailwind.config = {
+        plugins: [
+          function ({ addUtilities }) {
+            addUtilities({
+              ".text-balance": {
+                "text-wrap": "balance",
+              },
+            });
+          },
+        ],
+      };
+    </script>
+  </head>
+
+  <body>
+    <header class="bg-slate-950 text-white">
+      <nav
+        class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between"
+      >
+        <div>
+          <h1 class="text-2xl font-bold tracking-tight">DevSpace</h1>
+
+          <p class="text-xs text-slate-400">Learn • Build • Create</p>
+        </div>
+
+        <ul class="hidden md:flex items-center gap-8 text-sm">
+          <li>
+            <a href="#" class="hover:text-indigo-400 transition"> Home </a>
+          </li>
+
+          <li>
+            <a href="#courses" class="hover:text-indigo-400 transition">
+              Courses
+            </a>
+          </li>
+
+          <li>
+            <a href="#projects" class="hover:text-indigo-400 transition">
+              Projects
+            </a>
+          </li>
+
+          <li>
+            <a href="#about" class="hover:text-indigo-400 transition">
+              About
+            </a>
+          </li>
+
+          <li>
+            <a href="#contact" class="hover:text-indigo-400 transition">
+              Contact
+            </a>
+          </li>
+        </ul>
+
+        <button
+          id="menuButton"
+          class="md:hidden px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition"
+          aria-label="Toggle navigation menu"
+        >
+          ☰
+        </button>
+      </nav>
+
+      <div
+        id="mobileMenu"
+        class="hidden md:hidden bg-slate-900 border-t border-slate-800"
+      >
+        <ul class="px-6 py-4 space-y-3">
+          <li>
+            <a href="#" class="block py-2 hover:text-indigo-400 transition">
+              Home
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="#courses"
+              class="block py-2 hover:text-indigo-400 transition"
+            >
+              Courses
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="#projects"
+              class="block py-2 hover:text-indigo-400 transition"
+            >
+              Projects
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="#about"
+              class="block py-2 hover:text-indigo-400 transition"
+            >
+              About
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="#contact"
+              class="block py-2 hover:text-indigo-400 transition"
+            >
+              Contact
+            </a>
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    <main>
+      <section class="bg-slate-900 text-white px-6 py-24 md:py-32">
+        <div class="max-w-7xl mx-auto text-center">
+          <p class="text-indigo-400 font-semibold mb-4">
+            FULL STACK DEVELOPMENT
+          </p>
+
+          <h2 class="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+            Build. Learn. Create.
+          </h2>
+
+          <p class="max-w-2xl mx-auto text-slate-400 text-lg mb-10">
+            Master modern web development through practical projects and
+            real-world skills.
+          </p>
+
+          <a
+            href="#courses"
+            class="inline-block bg-indigo-600 hover:bg-indigo-500 px-7 py-3 rounded-lg font-semibold transition duration-300 hover:-translate-y-1"
+          >
+            Explore Courses
+          </a>
+        </div>
+      </section>
+
+      <section id="courses" class="bg-slate-100 px-6 py-20">
+        <div class="max-w-7xl mx-auto">
+          <div class="text-center mb-12">
+            <p class="text-indigo-600 font-semibold mb-2">WHAT WE OFFER</p>
+
+            <h2 class="text-3xl md:text-4xl font-bold text-slate-900">
+              Learn Skills That Matter
+            </h2>
+
+            <p class="text-slate-600 mt-4">
+              Explore technologies used in modern software development.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <article
+              class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition duration-300 hover:-translate-y-2"
+            >
+              <div class="text-4xl mb-5"></div>
+
+              <h3 class="text-xl font-bold text-slate-900 mb-3">
+                Web Development
+              </h3>
+
+              <p class="text-slate-600">
+                Build responsive and modern websites using HTML, CSS, JavaScript
+                and modern frameworks.
+              </p>
+            </article>
+
+            <article
+              class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition duration-300 hover:-translate-y-2"
+            >
+              <div class="text-4xl mb-5"></div>
+
+              <h3 class="text-xl font-bold text-slate-900 mb-3">
+                Cloud & DevOps
+              </h3>
+
+              <p class="text-slate-600">
+                Learn deployment, cloud platforms and modern DevOps practices.
+              </p>
+            </article>
+
+            <article
+              class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition duration-300 hover:-translate-y-2"
+            >
+              <div class="text-4xl mb-5"></div>
+
+              <h3 class="text-xl font-bold text-slate-900 mb-3">
+                AI & Machine Learning
+              </h3>
+
+              <p class="text-slate-600">
+                Explore artificial intelligence and machine learning through
+                practical applications.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="about"
+         class="bg-white px-6 py-20">
+
+    <div class="max-w-4xl mx-auto">
+
+        <div class="prose prose-slate lg:prose-lg mx-auto text-center">
+
+            <h2>
+                Why DevSpace?
+            </h2>
+
+            <p>
+                DevSpace is a learning platform designed
+                to help students develop practical
+                full-stack development skills through
+                hands-on learning and real-world projects.
+            </p>
+
+            <p>
+                Our goal is to make technology learning
+                simple, practical, and accessible for
+                aspiring developers.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+    </main>
+
+    <footer id="contact" class="bg-slate-950 text-slate-400 px-6 py-10">
+      <div class="max-w-7xl mx-auto text-center">
+        <h2 class="text-white text-xl font-bold mb-2">DevSpace</h2>
+
+        <p class="text-sm mb-5">Learn • Build • Create</p>
+
+        <div class="border-t border-slate-800 pt-5">
+          <p class="text-sm">© 2026 DevSpace. All rights reserved.</p>
+
+          <p class="text-xs mt-2">Built with HTML5 & Tailwind CSS</p>
+        </div>
+      </div>
+    </footer>
+    <script>
+      const menuButton = document.getElementById("menuButton");
+      const mobileMenu = document.getElementById("mobileMenu");
+
+      menuButton.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+    </script>
+  </body>
+</html>
