@@ -2,264 +2,1433 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>DevSpace - Full Stack Learning</title>
+    <meta
+      name="description"
+      content="DevSpace — Learn, experiment and build real technology."
+    />
 
+    <title>DevSpace — Build Beyond</title>
+
+    <!-- Tailwind CSS + Typography Plugin -->
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
 
-    <script>
-      tailwind.config = {
-        plugins: [
-          function ({ addUtilities }) {
-            addUtilities({
-              ".text-balance": {
-                "text-wrap": "balance",
-              },
-            });
-          },
-        ],
-      };
-    </script>
+    <style>
+      /* =====================================================
+           BASE
+        ===================================================== */
+
+      :root {
+        --bg: #0b100b;
+        --surface: #131a13;
+        --cream: #f1eadb;
+        --orange: #e88c56;
+        --sage: #9ba58b;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--cream);
+        overflow-x: hidden;
+        cursor: none;
+      }
+
+      ::selection {
+        background: var(--orange);
+        color: #0b100b;
+      }
+
+      /* =====================================================
+           CUSTOM CURSOR
+        ===================================================== */
+
+      #cursor {
+        position: fixed;
+
+        width: 10px;
+        height: 10px;
+
+        border-radius: 50%;
+
+        background: white;
+
+        pointer-events: none;
+
+        z-index: 99999;
+
+        transform: translate(-50%, -50%);
+
+        mix-blend-mode: difference;
+
+        transition:
+          width 0.25s ease,
+          height 0.25s ease;
+      }
+
+      #cursor-ring {
+        position: fixed;
+
+        width: 42px;
+        height: 42px;
+
+        border: 1px solid rgba(241, 234, 219, 0.45);
+
+        border-radius: 50%;
+
+        pointer-events: none;
+
+        z-index: 99998;
+
+        transform: translate(-50%, -50%);
+
+        transition:
+          width 0.3s ease,
+          height 0.3s ease,
+          border-color 0.3s ease,
+          background 0.3s ease;
+      }
+
+      body.cursor-hover #cursor {
+        width: 5px;
+        height: 5px;
+      }
+
+      body.cursor-hover #cursor-ring {
+        width: 72px;
+        height: 72px;
+
+        border-color: rgba(232, 140, 86, 0.8);
+
+        background: rgba(232, 140, 86, 0.05);
+      }
+
+      /* =====================================================
+           CURSOR GLOW
+        ===================================================== */
+
+      #cursorGlow {
+        position: fixed;
+
+        width: 450px;
+        height: 450px;
+
+        border-radius: 50%;
+
+        pointer-events: none;
+
+        z-index: 0;
+
+        transform: translate(-50%, -50%);
+
+        background: radial-gradient(
+          circle,
+          rgba(232, 140, 86, 0.08),
+          transparent 70%
+        );
+      }
+
+      /* =====================================================
+           HERO BACKGROUND
+        ===================================================== */
+
+      .hero-glow {
+        position: absolute;
+
+        width: 700px;
+        height: 700px;
+
+        border-radius: 50%;
+
+        background: radial-gradient(
+          circle,
+          rgba(76, 96, 55, 0.25),
+          transparent 70%
+        );
+
+        filter: blur(30px);
+
+        animation: heroFloat 12s ease-in-out infinite alternate;
+      }
+
+      @keyframes heroFloat {
+        0% {
+          transform: translate(-10%, -5%) scale(1);
+        }
+
+        100% {
+          transform: translate(10%, 5%) scale(1.15);
+        }
+      }
+
+      .hero-image {
+        position: absolute;
+        inset: 0;
+
+        background-image:
+          linear-gradient(
+            90deg,
+            rgba(11, 16, 11, 0.96) 0%,
+            rgba(11, 16, 11, 0.72) 45%,
+            rgba(11, 16, 11, 0.45) 100%
+          ),
+          url("./devspace-hero.png");
+
+        background-size: cover;
+        background-position: center;
+
+        opacity: 0.85;
+
+        transform: scale(1.03);
+
+        z-index: 0;
+      }
+
+      /* =====================================================
+           GRID
+        ===================================================== */
+
+      .grid-bg {
+        background-image:
+          linear-gradient(rgba(241, 234, 219, 0.025) 1px, transparent 1px),
+          linear-gradient(
+            90deg,
+            rgba(241, 234, 219, 0.025) 1px,
+            transparent 1px
+          );
+
+        background-size: 75px 75px;
+
+        mask-image: linear-gradient(to bottom, black 0%, transparent 85%);
+      }
+
+      /* =====================================================
+           FLOATING ELEMENTS
+        ===================================================== */
+
+      .float {
+        animation: floating 7s ease-in-out infinite;
+      }
+
+      .float-delay {
+        animation-delay: -3s;
+      }
+
+      @keyframes floating {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+
+        50% {
+          transform: translateY(-18px) rotate(3deg);
+        }
+      }
+
+      /* =====================================================
+           ORBIT
+        ===================================================== */
+
+      .orbit {
+        animation: orbit 20s linear infinite;
+      }
+
+      @keyframes orbit {
+        from {
+          transform: rotate(0deg) translateX(170px) rotate(0deg);
+        }
+
+        to {
+          transform: rotate(360deg) translateX(170px) rotate(-360deg);
+        }
+      }
+
+      /* =====================================================
+           MARQUEE
+        ===================================================== */
+
+      .marquee {
+        display: flex;
+
+        width: max-content;
+
+        animation: marquee 28s linear infinite;
+      }
+
+      @keyframes marquee {
+        from {
+          transform: translateX(0);
+        }
+
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* =====================================================
+           REVEAL
+        ===================================================== */
+
+      .reveal {
+        opacity: 0;
+
+        transform: translateY(45px);
+
+        transition:
+          opacity 0.9s ease,
+          transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .reveal.visible {
+        opacity: 1;
+
+        transform: translateY(0);
+      }
+
+      /* =====================================================
+           FEATURE / PROJECT CARDS
+        ===================================================== */
+
+      .interactive-card {
+        position: relative;
+
+        overflow: hidden;
+
+        transition:
+          transform 0.25s ease,
+          border-color 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .interactive-card::before {
+        content: "";
+
+        position: absolute;
+
+        width: 220px;
+        height: 220px;
+
+        left: var(--mouse-x, 50%);
+        top: var(--mouse-y, 50%);
+
+        transform: translate(-50%, -50%);
+
+        background: radial-gradient(
+          circle,
+          rgba(232, 140, 86, 0.16),
+          transparent 70%
+        );
+
+        opacity: 0;
+
+        transition: opacity 0.3s ease;
+
+        pointer-events: none;
+      }
+
+      .interactive-card:hover::before {
+        opacity: 1;
+      }
+
+      .interactive-card:hover {
+        border-color: rgba(232, 140, 86, 0.35);
+
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+      }
+
+      /* =====================================================
+           MAGNETIC BUTTON
+        ===================================================== */
+
+      .magnetic {
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      /* =====================================================
+           SHINE
+        ===================================================== */
+
+      .shine {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .shine::after {
+        content: "";
+
+        position: absolute;
+
+        top: 0;
+        left: -120%;
+
+        width: 80%;
+        height: 100%;
+
+        background: linear-gradient(
+          100deg,
+          transparent,
+          rgba(255, 255, 255, 0.18),
+          transparent
+        );
+
+        transform: skewX(-20deg);
+
+        transition: left 0.8s ease;
+      }
+
+      .shine:hover::after {
+        left: 140%;
+      }
+
+      /* =====================================================
+           GLOW LINE
+        ===================================================== */
+
+      .glow-line {
+        width: 100%;
+        height: 1px;
+
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(232, 140, 86, 0.6),
+          transparent
+        );
+      }
+
+      /* =====================================================
+           PROJECT VISUALS
+        ===================================================== */
+
+      .project-web {
+        background:
+          radial-gradient(
+            circle at 70% 20%,
+            rgba(67, 83, 52, 0.7),
+            transparent 35%
+          ),
+          linear-gradient(135deg, #101710, #253222);
+      }
+
+      .project-ai {
+        background:
+          radial-gradient(
+            circle at 30% 30%,
+            rgba(232, 140, 86, 0.35),
+            transparent 30%
+          ),
+          linear-gradient(135deg, #18120e, #35231a);
+      }
+
+      .project-cloud {
+        background:
+          radial-gradient(
+            circle at 70% 40%,
+            rgba(170, 177, 140, 0.25),
+            transparent 35%
+          ),
+          linear-gradient(135deg, #111613, #293029);
+      }
+
+      /* =====================================================
+           MOBILE
+        ===================================================== */
+
+      @media (max-width: 768px) {
+        body {
+          cursor: auto;
+        }
+
+        #cursor,
+        #cursor-ring,
+        #cursorGlow {
+          display: none;
+        }
+
+        .orbit {
+          display: none;
+        }
+      }
+
+      /* =====================================================
+           REDUCED MOTION
+        ===================================================== */
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+
+          animation-iteration-count: 1 !important;
+
+          scroll-behavior: auto !important;
+
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
   </head>
 
   <body>
-    <header class="bg-slate-950 text-white">
+    <!-- =====================================================
+         CURSOR
+    ===================================================== -->
+
+    <div id="cursor"></div>
+
+    <div id="cursor-ring"></div>
+
+    <div id="cursorGlow"></div>
+
+    <!-- =====================================================
+         HEADER
+    ===================================================== -->
+
+    <header class="fixed top-0 left-0 right-0 z-50">
       <nav
-        class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between"
+        class="max-w-7xl mx-auto mt-4 mx-4 px-5 py-3 rounded-2xl border border-[#f1eadb]/10 bg-[#0b100b]/70 backdrop-blur-xl flex items-center justify-between"
       >
-        <div>
-          <h1 class="text-2xl font-bold tracking-tight">DevSpace</h1>
+        <!-- LOGO -->
 
-          <p class="text-xs text-slate-400">Learn • Build • Create</p>
-        </div>
+        <a href="#home" class="group flex items-center gap-3">
+          <div
+            class="w-9 h-9 rounded-xl bg-[#e88c56] text-[#0b100b] flex items-center justify-center font-black group-hover:rotate-12 transition"
+          >
+            D
+          </div>
 
-        <ul class="hidden md:flex items-center gap-8 text-sm">
+          <div>
+            <span class="font-semibold tracking-tight"> DevSpace </span>
+
+            <span
+              class="hidden sm:block text-[9px] uppercase tracking-[0.3em] text-[#f1eadb]/35"
+            >
+              Build Beyond
+            </span>
+          </div>
+        </a>
+
+        <!-- DESKTOP NAV -->
+
+        <ul class="hidden md:flex items-center gap-8 text-sm text-[#f1eadb]/55">
           <li>
-            <a href="#" class="hover:text-indigo-400 transition"> Home </a>
+            <a href="#home" class="hover:text-[#f1eadb] transition"> Home </a>
           </li>
 
           <li>
-            <a href="#courses" class="hover:text-indigo-400 transition">
-              Courses
+            <a href="#explore" class="hover:text-[#f1eadb] transition">
+              Explore
             </a>
           </li>
 
           <li>
-            <a href="#projects" class="hover:text-indigo-400 transition">
+            <a href="#projects" class="hover:text-[#f1eadb] transition">
               Projects
             </a>
           </li>
 
           <li>
-            <a href="#about" class="hover:text-indigo-400 transition">
-              About
-            </a>
-          </li>
-
-          <li>
-            <a href="#contact" class="hover:text-indigo-400 transition">
-              Contact
-            </a>
+            <a href="#about" class="hover:text-[#f1eadb] transition"> About </a>
           </li>
         </ul>
+
+        <!-- DESKTOP CTA -->
+
+        <a
+          href="#contact"
+          class="hidden md:flex magnetic shine items-center gap-3 px-5 py-2.5 rounded-full border border-[#e88c56]/60 text-[#e88c56] text-sm font-semibold"
+        >
+          Get Started
+
+          <span>→</span>
+        </a>
+
+        <!-- MOBILE BUTTON -->
 
         <button
           id="menuButton"
-          class="md:hidden px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition"
-          aria-label="Toggle navigation menu"
+          class="md:hidden w-10 h-10 rounded-xl border border-[#f1eadb]/10 bg-[#f1eadb]/5 flex items-center justify-center"
         >
-          ☰
+          <span id="menuIcon">☰</span>
         </button>
       </nav>
 
+      <!-- MOBILE MENU -->
+
       <div
         id="mobileMenu"
-        class="hidden md:hidden bg-slate-900 border-t border-slate-800"
+        class="hidden md:hidden mx-4 mt-2 rounded-2xl border border-[#f1eadb]/10 bg-[#0b100b]/95 backdrop-blur-xl"
       >
-        <ul class="px-6 py-4 space-y-3">
-          <li>
-            <a href="#" class="block py-2 hover:text-indigo-400 transition">
-              Home
-            </a>
-          </li>
+        <div class="p-4">
+          <a
+            href="#home"
+            class="mobile-link block p-3 rounded-xl hover:bg-white/5"
+          >
+            Home
+          </a>
 
-          <li>
-            <a
-              href="#courses"
-              class="block py-2 hover:text-indigo-400 transition"
-            >
-              Courses
-            </a>
-          </li>
+          <a
+            href="#explore"
+            class="mobile-link block p-3 rounded-xl hover:bg-white/5"
+          >
+            Explore
+          </a>
 
-          <li>
-            <a
-              href="#projects"
-              class="block py-2 hover:text-indigo-400 transition"
-            >
-              Projects
-            </a>
-          </li>
+          <a
+            href="#projects"
+            class="mobile-link block p-3 rounded-xl hover:bg-white/5"
+          >
+            Projects
+          </a>
 
-          <li>
-            <a
-              href="#about"
-              class="block py-2 hover:text-indigo-400 transition"
-            >
-              About
-            </a>
-          </li>
+          <a
+            href="#about"
+            class="mobile-link block p-3 rounded-xl hover:bg-white/5"
+          >
+            About
+          </a>
 
-          <li>
-            <a
-              href="#contact"
-              class="block py-2 hover:text-indigo-400 transition"
-            >
-              Contact
-            </a>
-          </li>
-        </ul>
+          <a
+            href="#contact"
+            class="mobile-link block p-3 rounded-xl hover:bg-white/5"
+          >
+            Contact
+          </a>
+        </div>
       </div>
     </header>
 
+    <!-- =====================================================
+         MAIN
+    ===================================================== -->
+
     <main>
-      <section class="bg-slate-900 text-white px-6 py-24 md:py-32">
-        <div class="max-w-7xl mx-auto text-center">
-          <p class="text-indigo-400 font-semibold mb-4">
-            FULL STACK DEVELOPMENT
-          </p>
+      <!-- =================================================
+             HERO
+        ================================================== -->
 
-          <h2 class="text-4xl md:text-6xl font-bold tracking-tight mb-6">
-            Build. Learn. Create.
-          </h2>
+      <section
+        id="home"
+        class="relative min-h-screen flex items-center overflow-hidden">
 
-          <p class="max-w-2xl mx-auto text-slate-400 text-lg mb-10">
-            Master modern web development through practical projects and
-            real-world skills.
-          </p>
+        <div class="hero-image"></div>
 
-          <a
-            href="#courses"
-            class="inline-block bg-indigo-600 hover:bg-indigo-500 px-7 py-3 rounded-lg font-semibold transition duration-300 hover:-translate-y-1"
+        <div class="absolute inset-0 bg-[#0b100b]/20"></div>
+
+        <div class="hero-glow left-1/3 top-1/4"></div>
+
+        <div class="grid-bg absolute inset-0"></div>
+
+        <!-- ORBITING DOT -->
+
+        <div
+          class="orbit absolute left-1/2 top-1/2 w-2 h-2 rounded-full bg-[#e88c56] shadow-[0_0_30px_#e88c56]"
+        ></div>
+
+        <!-- HERO CONTENT -->
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-24 w-full">
+          <div class="max-w-6xl">
+            <!-- EYEBROW -->
+
+            <div
+              class="reveal inline-flex items-center gap-3 px-3 py-2 rounded-full border border-[#f1eadb]/10 bg-[#f1eadb]/5 text-xs text-[#f1eadb]/50 mb-8"
+            >
+              <span class="w-2 h-2 rounded-full bg-[#e88c56]"> </span>
+
+              LEARN / BUILD / CREATE
+            </div>
+
+            <!-- HERO TITLE -->
+
+            <h1
+              class="reveal text-[clamp(4rem,11vw,10rem)] leading-[0.82] tracking-[-0.075em] font-black"
+            >
+              IDEAS
+
+              <span class="block text-[#f1eadb]/90"> INTO </span>
+
+              <span class="block text-[#e88c56]"> IMPACT. </span>
+            </h1>
+
+            <!-- HERO LOWER -->
+
+            <div
+              class="mt-10 flex flex-col lg:flex-row lg:items-end justify-between gap-10"
+            >
+              <p
+                class="reveal max-w-xl text-lg md:text-xl leading-relaxed text-[#f1eadb]/45"
+              >
+                DevSpace helps you learn modern technology through real
+                projects, practical skills and a community that builds together.
+              </p>
+
+              <div class="reveal flex items-center gap-5">
+                <a
+                  href="#explore"
+                  class="magnetic shine group inline-flex items-center gap-4 px-7 py-4 rounded-full bg-[#e88c56] text-[#0b100b] font-semibold"
+                >
+                  Start Building
+
+                  <span class="group-hover:translate-x-1 transition"> → </span>
+                </a>
+
+                <a
+                  href="#method"
+                  class="text-sm text-[#f1eadb]/40 hover:text-[#f1eadb] transition"
+                >
+                  Our method ↓
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- FLOATING CODE CARD -->
+
+          <div
+            class="hidden lg:block absolute right-16 top-1/2 -translate-y-1/2 float w-64 p-6 rounded-3xl border border-[#f1eadb]/10 bg-[#f1eadb]/5 backdrop-blur-xl"
           >
-            Explore Courses
-          </a>
+            <div class="flex justify-between mb-8">
+              <span
+                class="text-[10px] uppercase tracking-[0.25em] text-[#f1eadb]/35"
+              >
+                BUILD STATUS
+              </span>
+
+              <span class="w-2 h-2 rounded-full bg-green-400"> </span>
+            </div>
+
+            <div class="text-4xl font-bold mb-1">98%</div>
+
+            <p class="text-xs text-[#f1eadb]/35">Build velocity</p>
+
+            <div class="h-1 bg-[#f1eadb]/10 rounded-full mt-6 overflow-hidden">
+              <div class="w-[98%] h-full bg-[#e88c56]"></div>
+            </div>
+          </div>
+
+          <!-- FLOATING CODE -->
+
+          <div
+            class="hidden lg:block absolute right-72 bottom-16 float float-delay w-52 p-5 rounded-2xl border border-[#f1eadb]/10 bg-[#0b100b]/80 backdrop-blur-xl"
+          >
+            <div class="flex gap-2 mb-4">
+              <span class="w-2 h-2 rounded-full bg-red-400"> </span>
+
+              <span class="w-2 h-2 rounded-full bg-yellow-400"> </span>
+
+              <span class="w-2 h-2 rounded-full bg-green-400"> </span>
+            </div>
+
+            <code class="text-xs text-[#e88c56] leading-6">
+              &lt;idea /&gt;<br />
+              &nbsp;&nbsp;learn();<br />
+              &nbsp;&nbsp;build();<br />
+              &nbsp;&nbsp;ship();
+            </code>
+          </div>
+        </div>
+
+        <!-- SCROLL -->
+
+        <div
+          class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center text-[9px] uppercase tracking-[0.35em] text-[#f1eadb]/25"
+        >
+          Scroll
+
+          <span
+            class="w-px h-10 bg-gradient-to-b from-[#e88c56] to-transparent mt-2"
+          >
+          </span>
         </div>
       </section>
 
-      <section id="courses" class="bg-slate-100 px-6 py-20">
+      <!-- =================================================
+             TECHNOLOGIES
+        ================================================== -->
+
+      <section
+        class="border-y border-[#f1eadb]/10 overflow-hidden bg-[#131a13]"
+      >
+        <div
+          class="marquee py-7 text-xs uppercase tracking-[0.3em] text-[#f1eadb]/35"
+        >
+          <span class="mx-8"> HTML ✦ CSS ✦ JavaScript ✦ React ✦ </span>
+
+          <span class="mx-8"> Node.js ✦ Python ✦ Git ✦ Docker ✦ </span>
+
+          <span class="mx-8"> HTML ✦ CSS ✦ JavaScript ✦ React ✦ </span>
+
+          <span class="mx-8"> Node.js ✦ Python ✦ Git ✦ Docker ✦ </span>
+
+          <span class="mx-8"> HTML ✦ CSS ✦ JavaScript ✦ React ✦ </span>
+
+          <span class="mx-8"> Node.js ✦ Python ✦ Git ✦ Docker ✦ </span>
+        </div>
+      </section>
+
+      <!-- =================================================
+             EXPLORE
+        ================================================== -->
+
+      <section id="explore" class="px-6 py-32 md:py-40">
         <div class="max-w-7xl mx-auto">
-          <div class="text-center mb-12">
-            <p class="text-indigo-600 font-semibold mb-2">WHAT WE OFFER</p>
+          <div class="reveal grid lg:grid-cols-2 gap-12 mb-20">
+            <div>
+              <p class="text-[#e88c56] text-xs uppercase tracking-[0.3em] mb-5">
+                WHAT YOU CAN BUILD
+              </p>
 
-            <h2 class="text-3xl md:text-4xl font-bold text-slate-900">
-              Learn Skills That Matter
-            </h2>
+              <h2
+                class="text-5xl md:text-7xl font-bold tracking-[-0.06em] leading-[0.9]"
+              >
+                Real skills.
+                <br />
 
-            <p class="text-slate-600 mt-4">
-              Explore technologies used in modern software development.
-            </p>
+                <span class="text-[#f1eadb]/35"> Real opportunities. </span>
+              </h2>
+            </div>
+
+            <div class="flex items-end">
+              <p class="text-[#f1eadb]/45 leading-7 max-w-lg">
+                From beautiful interfaces to intelligent systems, DevSpace gives
+                you the tools and guidance to turn ideas into real-world
+                solutions.
+              </p>
+            </div>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- CARDS -->
+
+          <div class="grid md:grid-cols-3 gap-5">
+            <!-- WEB -->
+
             <article
-              class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition duration-300 hover:-translate-y-2"
+              class="interactive-card reveal rounded-3xl border border-[#f1eadb]/10 p-8 min-h-[420px] flex flex-col justify-between bg-[#131a13]"
             >
-              <div class="text-4xl mb-5"></div>
+              <div>
+                <div
+                  class="w-12 h-12 rounded-2xl border border-[#e88c56]/30 bg-[#e88c56]/10 flex items-center justify-center text-[#e88c56] mb-12"
+                >
+                  &lt;/&gt;
+                </div>
 
-              <h3 class="text-xl font-bold text-slate-900 mb-3">
-                Web Development
-              </h3>
+                <p
+                  class="text-[10px] uppercase tracking-[0.25em] text-[#f1eadb]/30 mb-3"
+                >
+                  01 / WEB
+                </p>
 
-              <p class="text-slate-600">
-                Build responsive and modern websites using HTML, CSS, JavaScript
-                and modern frameworks.
+                <h3 class="text-3xl font-bold mb-5">Web Development</h3>
+
+                <p class="text-[#f1eadb]/40 leading-7">
+                  Create responsive interfaces, full-stack applications and
+                  digital experiences.
+                </p>
+              </div>
+
+              <div class="text-right text-5xl text-[#f1eadb]/10">↗</div>
+            </article>
+
+            <!-- AI -->
+
+            <article
+              class="interactive-card reveal rounded-3xl border border-[#f1eadb]/10 p-8 min-h-[420px] flex flex-col justify-between bg-[#18120e]"
+            >
+              <div>
+                <div
+                  class="w-12 h-12 rounded-2xl border border-[#e88c56]/30 bg-[#e88c56]/10 flex items-center justify-center text-[#e88c56] mb-12"
+                >
+                  ✦
+                </div>
+
+                <p
+                  class="text-[10px] uppercase tracking-[0.25em] text-[#f1eadb]/30 mb-3"
+                >
+                  02 / INTELLIGENCE
+                </p>
+
+                <h3 class="text-3xl font-bold mb-5">AI & Machine Learning</h3>
+
+                <p class="text-[#f1eadb]/40 leading-7">
+                  Explore intelligent systems, machine learning and generative
+                  AI through practical projects.
+                </p>
+              </div>
+
+              <div class="text-right text-5xl text-[#f1eadb]/10">◎</div>
+            </article>
+
+            <!-- CLOUD -->
+
+            <article
+              class="interactive-card reveal rounded-3xl border border-[#f1eadb]/10 p-8 min-h-[420px] flex flex-col justify-between bg-[#131715]"
+            >
+              <div>
+                <div
+                  class="w-12 h-12 rounded-2xl border border-[#9ba58b]/30 bg-[#9ba58b]/10 flex items-center justify-center text-[#9ba58b] mb-12"
+                >
+                  ☁
+                </div>
+
+                <p
+                  class="text-[10px] uppercase tracking-[0.25em] text-[#f1eadb]/30 mb-3"
+                >
+                  03 / SYSTEMS
+                </p>
+
+                <h3 class="text-3xl font-bold mb-5">Cloud & DevOps</h3>
+
+                <p class="text-[#f1eadb]/40 leading-7">
+                  Learn deployment, infrastructure and scalable cloud systems.
+                </p>
+              </div>
+
+              <div class="text-right text-5xl text-[#f1eadb]/10">∞</div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================
+             METHOD
+        ================================================== -->
+
+      <section id="method" class="px-6 py-32 bg-[#f1eadb] text-[#10140f]">
+        <div class="max-w-7xl mx-auto">
+          <div class="reveal max-w-3xl mb-20">
+            <p class="text-[#8c5a3d] text-xs uppercase tracking-[0.3em] mb-5">
+              THE DEVSPACE METHOD
+            </p>
+
+            <h2
+              class="text-5xl md:text-7xl font-bold tracking-[-0.06em] leading-[0.9]"
+            >
+              Don't just consume.
+
+              <br />
+
+              <span class="text-[#536047]"> Create. </span>
+            </h2>
+          </div>
+
+          <div class="grid md:grid-cols-4 border-t border-[#10140f]/15">
+            <!-- STEP -->
+
+            <article
+              class="reveal py-10 md:pr-8 border-b md:border-b-0 md:border-r border-[#10140f]/15"
+            >
+              <span class="text-sm text-[#8c5a3d]"> 01 </span>
+
+              <h3 class="text-3xl font-bold mt-12 mb-4">Learn</h3>
+
+              <p class="text-[#10140f]/55 leading-7">
+                Understand the fundamentals before jumping into complexity.
               </p>
             </article>
 
             <article
-              class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition duration-300 hover:-translate-y-2"
+              class="reveal py-10 md:px-8 border-b md:border-b-0 md:border-r border-[#10140f]/15"
             >
-              <div class="text-4xl mb-5"></div>
+              <span class="text-sm text-[#8c5a3d]"> 02 </span>
 
-              <h3 class="text-xl font-bold text-slate-900 mb-3">
-                Cloud & DevOps
-              </h3>
+              <h3 class="text-3xl font-bold mt-12 mb-4">Experiment</h3>
 
-              <p class="text-slate-600">
-                Learn deployment, cloud platforms and modern DevOps practices.
+              <p class="text-[#10140f]/55 leading-7">
+                Break things, test ideas and discover how systems behave.
               </p>
             </article>
 
             <article
-              class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition duration-300 hover:-translate-y-2"
+              class="reveal py-10 md:px-8 border-b md:border-b-0 md:border-r border-[#10140f]/15"
             >
-              <div class="text-4xl mb-5"></div>
+              <span class="text-sm text-[#8c5a3d]"> 03 </span>
 
-              <h3 class="text-xl font-bold text-slate-900 mb-3">
-                AI & Machine Learning
-              </h3>
+              <h3 class="text-3xl font-bold mt-12 mb-4">Build</h3>
 
-              <p class="text-slate-600">
-                Explore artificial intelligence and machine learning through
-                practical applications.
+              <p class="text-[#10140f]/55 leading-7">
+                Turn knowledge into something functional and useful.
+              </p>
+            </article>
+
+            <article class="reveal py-10 md:pl-8">
+              <span class="text-sm text-[#8c5a3d]"> 04 </span>
+
+              <h3 class="text-3xl font-bold mt-12 mb-4">Ship</h3>
+
+              <p class="text-[#10140f]/55 leading-7">
+                Put your work into the world, learn from it and repeat.
               </p>
             </article>
           </div>
         </div>
       </section>
 
-      <section id="about"
-         class="bg-white px-6 py-20">
+      <!-- =================================================
+             PROJECTS
+        ================================================== -->
 
-    <div class="max-w-4xl mx-auto">
+      <section id="projects" class="px-6 py-32 md:py-40">
+        <div class="max-w-7xl mx-auto">
+          <div
+            class="reveal flex flex-col md:flex-row justify-between md:items-end gap-8 mb-16"
+          >
+            <div>
+              <p class="text-[#e88c56] text-xs uppercase tracking-[0.3em] mb-5">
+                SELECTED BUILDS
+              </p>
 
-        <div class="prose prose-slate lg:prose-lg mx-auto text-center">
+              <h2 class="text-5xl md:text-7xl font-bold tracking-[-0.06em]">
+                Things worth
+                <span class="text-[#f1eadb]/30"> making. </span>
+              </h2>
+            </div>
 
-            <h2>
-                Why DevSpace?
+            <p class="text-[#f1eadb]/35 max-w-sm leading-7">
+              A few directions your learning can take when concepts become real
+              projects.
+            </p>
+          </div>
+
+          <!-- PROJECT 1 -->
+
+          <article
+            class="interactive-card reveal project-web rounded-[2rem] border border-[#f1eadb]/10 p-6 md:p-8 mb-5"
+          >
+            <div class="grid md:grid-cols-2 gap-10 items-end min-h-[400px]">
+              <div>
+                <span class="text-xs text-[#f1eadb]/35">
+                  01 — WEB APPLICATION
+                </span>
+
+                <h3
+                  class="text-4xl md:text-6xl font-bold tracking-[-0.05em] mt-8"
+                >
+                  Smart Dashboard
+                </h3>
+
+                <p class="text-[#f1eadb]/45 max-w-md leading-7 mt-6">
+                  A responsive dashboard combining data visualization,
+                  interactive components and a clean user experience.
+                </p>
+              </div>
+
+              <div class="flex justify-end">
+                <span
+                  class="w-16 h-16 rounded-full border border-[#f1eadb]/20 flex items-center justify-center text-2xl hover:bg-[#e88c56] hover:text-[#0b100b] transition"
+                >
+                  ↗
+                </span>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECTS 2 + 3 -->
+
+          <div class="grid md:grid-cols-2 gap-5">
+            <article
+              class="interactive-card reveal project-ai rounded-[2rem] border border-[#f1eadb]/10 p-8 min-h-[420px] flex flex-col justify-between"
+            >
+              <div>
+                <span class="text-xs text-[#f1eadb]/35">
+                  02 — ARTIFICIAL INTELLIGENCE
+                </span>
+
+                <h3 class="text-4xl font-bold mt-8">AI Security</h3>
+
+                <p class="text-[#f1eadb]/40 leading-7 mt-5 max-w-md">
+                  Explore how intelligent systems can identify patterns, risks
+                  and unusual behavior.
+                </p>
+              </div>
+
+              <span class="text-5xl text-[#f1eadb]/15 self-end"> ✦ </span>
+            </article>
+
+            <article
+              class="interactive-card reveal project-cloud rounded-[2rem] border border-[#f1eadb]/10 p-8 min-h-[420px] flex flex-col justify-between"
+            >
+              <div>
+                <span class="text-xs text-[#f1eadb]/35">
+                  03 — CLOUD SYSTEM
+                </span>
+
+                <h3 class="text-4xl font-bold mt-8">Deploy & Scale</h3>
+
+                <p class="text-[#f1eadb]/40 leading-7 mt-5 max-w-md">
+                  Learn how applications move from a local environment into
+                  scalable infrastructure.
+                </p>
+              </div>
+
+              <span class="text-5xl text-[#f1eadb]/15 self-end"> ∞ </span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================
+             PHILOSOPHY
+        ================================================== -->
+
+      <section
+        id="about"
+        class="px-6 py-32 md:py-44 border-y border-[#f1eadb]/10"
+      >
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+          <div class="reveal">
+            <p class="text-[#e88c56] text-xs uppercase tracking-[0.3em] mb-6">
+              OUR PHILOSOPHY
+            </p>
+
+            <h2
+              class="text-5xl md:text-7xl font-bold tracking-[-0.06em] leading-[0.9]"
+            >
+              Learning should feel like
+
+              <span class="text-[#f1eadb]/30"> creating. </span>
+            </h2>
+          </div>
+
+          <!-- TYPOGRAPHY PLUGIN -->
+
+          <div class="reveal prose prose-invert prose-lg max-w-none">
+            <p>
+              Technology isn't learned by watching more tutorials. It becomes
+              meaningful when you start using it to solve problems.
+            </p>
+
+            <p>
+              DevSpace is built around that idea: learn a concept, experiment
+              with it, turn it into a project and discover what happens when you
+              push it further.
+            </p>
+
+            <blockquote>Build something that teaches you something.</blockquote>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================
+             STATS / PRINCIPLES
+        ================================================== -->
+
+      <section class="px-6 py-24">
+        <div class="max-w-7xl mx-auto">
+          <div
+            class="grid grid-cols-2 md:grid-cols-4 border-t border-[#f1eadb]/10"
+          >
+            <div class="reveal py-10 border-r border-[#f1eadb]/10">
+              <div class="text-5xl md:text-7xl font-bold">01</div>
+
+              <p class="mt-3 text-sm text-[#f1eadb]/35">Learn</p>
+            </div>
+
+            <div
+              class="reveal py-10 pl-6 md:pl-10 md:border-r border-[#f1eadb]/10"
+            >
+              <div class="text-5xl md:text-7xl font-bold">02</div>
+
+              <p class="mt-3 text-sm text-[#f1eadb]/35">Experiment</p>
+            </div>
+
+            <div
+              class="reveal py-10 md:pl-10 border-t md:border-t-0 md:border-r border-[#f1eadb]/10"
+            >
+              <div class="text-5xl md:text-7xl font-bold">03</div>
+
+              <p class="mt-3 text-sm text-[#f1eadb]/35">Build</p>
+            </div>
+
+            <div class="reveal py-10 pl-6 md:pl-10 border-t md:border-t-0">
+              <div class="text-5xl md:text-7xl font-bold">∞</div>
+
+              <p class="mt-3 text-sm text-[#f1eadb]/35">Repeat</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================
+             FINAL CTA
+        ================================================== -->
+
+      <section id="contact" class="px-6 pb-32">
+        <div
+          class="reveal relative max-w-7xl mx-auto overflow-hidden rounded-[2rem] border border-[#e88c56]/20 bg-[#e88c56] text-[#0b100b] p-10 md:p-20"
+        >
+          <div
+            class="absolute w-96 h-96 rounded-full bg-white/20 blur-[100px] -right-40 -top-40"
+          ></div>
+
+          <div class="relative z-10 max-w-4xl">
+            <p class="text-xs uppercase tracking-[0.3em] mb-7 opacity-60">
+              YOUR NEXT PROJECT
+            </p>
+
+            <h2
+              class="text-6xl md:text-9xl font-black tracking-[-0.08em] leading-[0.8]"
+            >
+              BUILD
+              <br />
+
+              SOMETHING
+              <br />
+
+              REAL.
             </h2>
 
-            <p>
-                DevSpace is a learning platform designed
-                to help students develop practical
-                full-stack development skills through
-                hands-on learning and real-world projects.
-            </p>
+            <a
+              href="#home"
+              class="magnetic shine inline-flex items-center gap-4 mt-12 px-7 py-4 rounded-full bg-[#0b100b] text-[#f1eadb] font-semibold"
+            >
+              Start Exploring
 
-            <p>
-                Our goal is to make technology learning
-                simple, practical, and accessible for
-                aspiring developers.
-            </p>
-
+              <span>↑</span>
+            </a>
+          </div>
         </div>
-
-    </div>
-
-</section>
+      </section>
     </main>
 
-    <footer id="contact" class="bg-slate-950 text-slate-400 px-6 py-10">
-      <div class="max-w-7xl mx-auto text-center">
-        <h2 class="text-white text-xl font-bold mb-2">DevSpace</h2>
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
 
-        <p class="text-sm mb-5">Learn • Build • Create</p>
+    <footer class="border-t border-[#f1eadb]/10 px-6 py-12">
+      <div
+        class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-8"
+      >
+        <div>
+          <div class="font-semibold text-lg">DevSpace</div>
 
-        <div class="border-t border-slate-800 pt-5">
-          <p class="text-sm">© 2026 DevSpace. All rights reserved.</p>
-
-          <p class="text-xs mt-2">Built with HTML5 & Tailwind CSS</p>
+          <p class="text-sm text-[#f1eadb]/30 mt-2">
+            Build beyond the obvious.
+          </p>
         </div>
+
+        <div class="flex gap-8 text-sm text-[#f1eadb]/35">
+          <a href="#home" class="hover:text-[#e88c56] transition"> Home </a>
+
+          <a href="#explore" class="hover:text-[#e88c56] transition">
+            Explore
+          </a>
+
+          <a href="#projects" class="hover:text-[#e88c56] transition">
+            Projects
+          </a>
+
+          <a href="#about" class="hover:text-[#e88c56] transition"> About </a>
+        </div>
+
+        <p class="text-xs text-[#f1eadb]/25">© 2026 DevSpace</p>
       </div>
     </footer>
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
     <script>
+      /* =====================================================
+           MOBILE MENU
+        ===================================================== */
+
       const menuButton = document.getElementById("menuButton");
+
       const mobileMenu = document.getElementById("mobileMenu");
+
+      const menuIcon = document.getElementById("menuIcon");
 
       menuButton.addEventListener("click", () => {
         mobileMenu.classList.toggle("hidden");
+
+        if (mobileMenu.classList.contains("hidden")) {
+          menuIcon.textContent = "☰";
+        } else {
+          menuIcon.textContent = "✕";
+        }
+      });
+
+      /* Close mobile menu */
+
+      document.querySelectorAll(".mobile-link").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.add("hidden");
+
+          menuIcon.textContent = "☰";
+        });
+      });
+
+      /* =====================================================
+           CUSTOM CURSOR
+        ====================================================== */
+
+      const cursor = document.getElementById("cursor");
+
+      const cursorRing = document.getElementById("cursor-ring");
+
+      const cursorGlow = document.getElementById("cursorGlow");
+
+      let mouseX = window.innerWidth / 2;
+
+      let mouseY = window.innerHeight / 2;
+
+      let ringX = mouseX;
+      let ringY = mouseY;
+
+      let glowX = mouseX;
+      let glowY = mouseY;
+
+      document.addEventListener("mousemove", (event) => {
+        mouseX = event.clientX;
+
+        mouseY = event.clientY;
+
+        cursor.style.left = `${mouseX}px`;
+
+        cursor.style.top = `${mouseY}px`;
+      });
+
+      function animateCursor() {
+        ringX += (mouseX - ringX) * 0.15;
+
+        ringY += (mouseY - ringY) * 0.15;
+
+        glowX += (mouseX - glowX) * 0.05;
+
+        glowY += (mouseY - glowY) * 0.05;
+
+        cursorRing.style.left = `${ringX}px`;
+
+        cursorRing.style.top = `${ringY}px`;
+
+        cursorGlow.style.left = `${glowX}px`;
+
+        cursorGlow.style.top = `${glowY}px`;
+
+        requestAnimationFrame(animateCursor);
+      }
+
+      animateCursor();
+
+      /* =====================================================
+           CURSOR INTERACTION
+        ====================================================== */
+
+      document
+        .querySelectorAll("a, button, .interactive-card")
+        .forEach((element) => {
+          element.addEventListener("mouseenter", () => {
+            document.body.classList.add("cursor-hover");
+          });
+
+          element.addEventListener("mouseleave", () => {
+            document.body.classList.remove("cursor-hover");
+          });
+        });
+
+      /* =====================================================
+           MAGNETIC BUTTONS
+        ====================================================== */
+
+      document.querySelectorAll(".magnetic").forEach((button) => {
+        button.addEventListener("mousemove", (event) => {
+          const rect = button.getBoundingClientRect();
+
+          const x = event.clientX - rect.left - rect.width / 2;
+
+          const y = event.clientY - rect.top - rect.height / 2;
+
+          button.style.transform = `translate(
+                                ${x * 0.15}px,
+                                ${y * 0.15}px
+                            )`;
+        });
+
+        button.addEventListener("mouseleave", () => {
+          button.style.transform = "translate(0, 0)";
+        });
+      });
+
+      /* =====================================================
+           INTERACTIVE CARDS
+        ====================================================== */
+
+      document.querySelectorAll(".interactive-card").forEach((card) => {
+        card.addEventListener("mousemove", (event) => {
+          const rect = card.getBoundingClientRect();
+
+          const x = event.clientX - rect.left;
+
+          const y = event.clientY - rect.top;
+
+          const rotateY = (x / rect.width - 0.5) * 7;
+
+          const rotateX = (y / rect.height - 0.5) * -7;
+
+          card.style.transform = `perspective(1000px)
+                             rotateX(${rotateX}deg)
+                             rotateY(${rotateY}deg)
+                             translateY(-5px)`;
+
+          card.style.setProperty("--mouse-x", `${x}px`);
+
+          card.style.setProperty("--mouse-y", `${y}px`);
+        });
+
+        card.addEventListener("mouseleave", () => {
+          card.style.transform =
+            "perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)";
+        });
+      });
+
+      /* =====================================================
+           SCROLL REVEAL
+        ====================================================== */
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.12,
+        },
+      );
+
+      document.querySelectorAll(".reveal").forEach((element) => {
+        observer.observe(element);
+      });
+
+      /* =====================================================
+           HERO PARALLAX
+        ====================================================== */
+
+      document.addEventListener("mousemove", (event) => {
+        const x = event.clientX / window.innerWidth - 0.5;
+
+        const y = event.clientY / window.innerHeight - 0.5;
+
+        document.querySelectorAll(".float").forEach((element, index) => {
+          const strength = index % 2 === 0 ? 10 : -7;
+
+          element.style.marginLeft = `${x * strength}px`;
+
+          element.style.marginTop = `${y * strength}px`;
+        });
       });
     </script>
   </body>
